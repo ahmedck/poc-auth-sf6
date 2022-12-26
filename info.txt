@@ -1,0 +1,39 @@
+1/install doctrine
+
+composer require symfony/orm-pack
+composer require --dev symfony/maker-bundle
+
+2/ enable db config connection string
+https://symfony.com/doc/current/doctrine.html
+
+
+3/ create db
+php bin/console doctrine:database:create
+
+
+4/ create user
+php bin/console make:user
+
+php bin/console make:migration
+php bin/console doctrine:migrations:migrate
+
+to hash password:
+php bin/console security:hash-password
+
+
+INSERT INTO `user` (`id`, `email`, `roles`, `password`) VALUES (NULL, 'test@test.com', '[\"IS_AUTHENTICATED_FULLY\"]', '$2y$13$3nb12hAtolqYJpWB2OCjY.C2.XuzpkL.QT0s8UCpH1IB/9s/pT.S.');
+
+
+5/ appel post http://localhost:8001/auth
+
+body:
+{"username":"test@test.com","password":"admin"}
+
+response:
+{
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2NzIwNjIyNjAsImV4cCI6MTY3MjA2NTg2MCwicm9sZXMiOlsiSVNfQVVUSEVOVElDQVRFRF9GVUxMWSIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6InRlc3RAdGVzdC5jb20ifQ.d_kZTxyHSRdf3je_r0keJ2X7cLca8tC-pG7vvlAHJdKs0scrb8GYlOaNk7AEUTx4bvZCAegaeoiFdRdfSJMV0rW6vOQcv-zlw5-XDvOGBLafiVMt1dE2DNWOaImCyjodjT-Mem6yD56CDypr7fsGs6WJ1C7mwLh6swrEVncJhRL5pzLc32by8xdG65unAW9jQWwQxKi8PmhYToQQKz1app55ia79A2UT3eujDon-XmdgjYnS5lDEVKP_jedfOjby2-b1A2Y0dmERvQcM889pLO0qRjGd7QUKkjhNnPfKNuSR0Fv5SNrE_dqI8xB-Cp1X_6RiulcJgabvKMhXL2iVYg"
+}
+---
+
+
+make:auth ?, with api
